@@ -70,14 +70,12 @@ put '/:collection/*key' => sub {
     });
 };
 
-sub MAIN {
-    my ($args) = @_;
-    if ( defined($args->{"database-root"}) ){
-        CONFIG->{database_root} = $args->{"database-root"};
-    }
-    mkdir(CONFIG->{database_root});
+my %args;
+GetOptions(\%args, "database-root=s");
 
-    say "COOL";
+if ( defined($args{"database-root"}) ) {
+    CONFIG->{database_root} = $args{"database-root"};
 }
+mkdir(CONFIG->{database_root});
 
 app->start;
